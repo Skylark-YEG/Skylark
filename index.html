@@ -712,10 +712,8 @@ footer{background:var(--navy); color:rgba(255,255,255,0.72); padding:70px 0 30px
             </div>
             <div class="field"><label for="ppInputDepart">Departure <span class="req">*</span></label><input id="ppInputDepart" type="date" required></div>
             <div class="field"><label for="ppInputReturn">Return <span class="req">*</span></label><input id="ppInputReturn" type="date" required></div>
-            <div class="field full"><label for="ppInputFrom">Travelling From <span class="req">*</span></label><input id="ppInputFrom" type="text" list="ppAirportList" required placeholder="e.g. Edmonton (YEG)" autocomplete="off"></div>
-            <div class="field full"><label for="ppInputTo">Travelling To <span class="req">*</span></label><input id="ppInputTo" type="text" list="ppToAirportList" required placeholder="e.g. Cancún (CUN)" autocomplete="off"></div>
-            <datalist id="ppAirportList"></datalist>
-            <datalist id="ppToAirportList"></datalist>
+            <div class="field full"><label for="ppInputFrom">Travelling From <span class="req">*</span></label><input id="ppInputFrom" type="text" required placeholder="e.g. Edmonton (YEG)" autocomplete="off"></div>
+            <div class="field full"><label for="ppInputTo">Travelling To <span class="req">*</span></label><input id="ppInputTo" type="text" required placeholder="e.g. Cancún (CUN)" autocomplete="off"></div>
             <div class="field full"><label for="ppInputDetails">Additional Details</label><textarea id="ppInputDetails" rows="3" placeholder="Anything else we should know?"></textarea></div>
           </div>
           <button type="submit" class="submit-btn">Request This Package <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
@@ -999,144 +997,6 @@ function validatePpForm(){
   return ok;
 }
 
-/* ===== airports (worldwide majors, for "Travelling From") ===== */
-var AIRPORT_DB = [
-{c:"YEG",t:"Edmonton",n:"Canada"},{c:"YYC",t:"Calgary",n:"Canada"},{c:"YYZ",t:"Toronto",n:"Canada"},{c:"YVR",t:"Vancouver",n:"Canada"},{c:"YUL",t:"Montreal",n:"Canada"},{c:"YOW",t:"Ottawa",n:"Canada"},{c:"YWG",t:"Winnipeg",n:"Canada"},{c:"YHZ",t:"Halifax",n:"Canada"},{c:"YYT",t:"St. John's",n:"Canada"},
-{c:"JFK",t:"New York",n:"USA"},{c:"LAX",t:"Los Angeles",n:"USA"},{c:"ORD",t:"Chicago",n:"USA"},{c:"MIA",t:"Miami",n:"USA"},{c:"LAS",t:"Las Vegas",n:"USA"},{c:"SFO",t:"San Francisco",n:"USA"},{c:"SEA",t:"Seattle",n:"USA"},{c:"ATL",t:"Atlanta",n:"USA"},{c:"DFW",t:"Dallas",n:"USA"},{c:"IAH",t:"Houston",n:"USA"},{c:"BOS",t:"Boston",n:"USA"},{c:"IAD",t:"Washington D.C.",n:"USA"},{c:"HNL",t:"Honolulu",n:"USA"},{c:"MCO",t:"Orlando",n:"USA"},
-{c:"LHR",t:"London",n:"United Kingdom"},{c:"MAN",t:"Manchester",n:"United Kingdom"},{c:"EDI",t:"Edinburgh",n:"United Kingdom"},
-{c:"CDG",t:"Paris",n:"France"},{c:"NCE",t:"Nice",n:"France"},
-{c:"FRA",t:"Frankfurt",n:"Germany"},{c:"MUC",t:"Munich",n:"Germany"},{c:"BER",t:"Berlin",n:"Germany"},
-{c:"AMS",t:"Amsterdam",n:"Netherlands"},
-{c:"MAD",t:"Madrid",n:"Spain"},{c:"BCN",t:"Barcelona",n:"Spain"},{c:"PMI",t:"Palma de Mallorca",n:"Spain"},
-{c:"FCO",t:"Rome",n:"Italy"},{c:"MXP",t:"Milan",n:"Italy"},{c:"VCE",t:"Venice",n:"Italy"},
-{c:"LIS",t:"Lisbon",n:"Portugal"},
-{c:"ATH",t:"Athens",n:"Greece"},{c:"JTR",t:"Santorini",n:"Greece"},{c:"JMK",t:"Mykonos",n:"Greece"},
-{c:"IST",t:"Istanbul",n:"Turkey"},{c:"AYT",t:"Antalya",n:"Turkey"},
-{c:"ZRH",t:"Zurich",n:"Switzerland"},
-{c:"VIE",t:"Vienna",n:"Austria"},
-{c:"CPH",t:"Copenhagen",n:"Denmark"},
-{c:"OSL",t:"Oslo",n:"Norway"},
-{c:"ARN",t:"Stockholm",n:"Sweden"},
-{c:"DUB",t:"Dublin",n:"Ireland"},
-{c:"KEF",t:"Reykjavik",n:"Iceland"},
-{c:"WAW",t:"Warsaw",n:"Poland"},
-{c:"PRG",t:"Prague",n:"Czech Republic"},
-{c:"BUD",t:"Budapest",n:"Hungary"},
-{c:"DXB",t:"Dubai",n:"UAE"},{c:"AUH",t:"Abu Dhabi",n:"UAE"},{c:"SHJ",t:"Sharjah",n:"UAE"},
-{c:"DOH",t:"Doha",n:"Qatar"},
-{c:"CAI",t:"Cairo",n:"Egypt"},{c:"HRG",t:"Hurghada",n:"Egypt"},{c:"SSH",t:"Sharm El Sheikh",n:"Egypt"},
-{c:"CMN",t:"Casablanca",n:"Morocco"},{c:"RAK",t:"Marrakech",n:"Morocco"},
-{c:"JNB",t:"Johannesburg",n:"South Africa"},{c:"CPT",t:"Cape Town",n:"South Africa"},
-{c:"NBO",t:"Nairobi",n:"Kenya"},
-{c:"LOS",t:"Lagos",n:"Nigeria"},
-{c:"ACC",t:"Accra",n:"Ghana"},
-{c:"DEL",t:"New Delhi",n:"India"},{c:"BOM",t:"Mumbai",n:"India"},{c:"GOI",t:"Goa",n:"India"},{c:"BLR",t:"Bangalore",n:"India"},{c:"MAA",t:"Chennai",n:"India"},
-{c:"CMB",t:"Colombo",n:"Sri Lanka"},
-{c:"KTM",t:"Kathmandu",n:"Nepal"},
-{c:"DAC",t:"Dhaka",n:"Bangladesh"},
-{c:"ISB",t:"Islamabad",n:"Pakistan"},{c:"KHI",t:"Karachi",n:"Pakistan"},{c:"LHE",t:"Lahore",n:"Pakistan"},
-{c:"BKK",t:"Bangkok",n:"Thailand"},{c:"HKT",t:"Phuket",n:"Thailand"},{c:"CNX",t:"Chiang Mai",n:"Thailand"},
-{c:"SGN",t:"Ho Chi Minh City",n:"Vietnam"},{c:"HAN",t:"Hanoi",n:"Vietnam"},
-{c:"SIN",t:"Singapore",n:"Singapore"},
-{c:"KUL",t:"Kuala Lumpur",n:"Malaysia"},
-{c:"DPS",t:"Bali (Denpasar)",n:"Indonesia"},{c:"CGK",t:"Jakarta",n:"Indonesia"},
-{c:"MNL",t:"Manila",n:"Philippines"},{c:"CEB",t:"Cebu",n:"Philippines"},
-{c:"HKG",t:"Hong Kong",n:"Hong Kong"},
-{c:"PEK",t:"Beijing",n:"China"},{c:"PVG",t:"Shanghai",n:"China"},
-{c:"ICN",t:"Seoul",n:"South Korea"},
-{c:"NRT",t:"Tokyo",n:"Japan"},{c:"KIX",t:"Osaka",n:"Japan"},
-{c:"TPE",t:"Taipei",n:"Taiwan"},
-{c:"SYD",t:"Sydney",n:"Australia"},{c:"MEL",t:"Melbourne",n:"Australia"},{c:"BNE",t:"Brisbane",n:"Australia"},{c:"PER",t:"Perth",n:"Australia"},
-{c:"AKL",t:"Auckland",n:"New Zealand"},
-{c:"NAN",t:"Nadi",n:"Fiji"},
-{c:"MLE",t:"Malé",n:"Maldives"},
-{c:"MEX",t:"Mexico City",n:"Mexico"},{c:"CUN",t:"Cancún",n:"Mexico"},{c:"PVR",t:"Puerto Vallarta",n:"Mexico"},{c:"SJD",t:"Los Cabos",n:"Mexico"},{c:"GDL",t:"Guadalajara",n:"Mexico"},
-{c:"HAV",t:"Havana",n:"Cuba"},
-{c:"MBJ",t:"Montego Bay",n:"Jamaica"},{c:"KIN",t:"Kingston",n:"Jamaica"},
-{c:"PUJ",t:"Punta Cana",n:"Dominican Republic"},{c:"SDQ",t:"Santo Domingo",n:"Dominican Republic"},
-{c:"NAS",t:"Nassau",n:"Bahamas"},
-{c:"AUA",t:"Aruba",n:"Aruba"},
-{c:"SJU",t:"San Juan",n:"Puerto Rico"},
-{c:"BGI",t:"Bridgetown",n:"Barbados"},
-{c:"BZE",t:"Belize City",n:"Belize"},
-{c:"SJO",t:"San José",n:"Costa Rica"},
-{c:"PTY",t:"Panama City",n:"Panama"},
-{c:"BOG",t:"Bogotá",n:"Colombia"},{c:"CTG",t:"Cartagena",n:"Colombia"},
-{c:"LIM",t:"Lima",n:"Peru"},{c:"CUZ",t:"Cusco",n:"Peru"},
-{c:"UIO",t:"Quito",n:"Ecuador"},{c:"GPS",t:"Galápagos",n:"Ecuador"},
-{c:"SCL",t:"Santiago",n:"Chile"},
-{c:"EZE",t:"Buenos Aires",n:"Argentina"},
-{c:"GRU",t:"São Paulo",n:"Brazil"},{c:"GIG",t:"Rio de Janeiro",n:"Brazil"}
-];
-function populateAirportDatalist(){
-  var dl = document.getElementById('ppAirportList');
-  if(!dl) return;
-  dl.innerHTML = AIRPORT_DB.map(function(a){
-    return '<option value="' + a.t + ' (' + a.c + '), ' + a.n + '">';
-  }).join('');
-}
-populateAirportDatalist();
-
-/* ===== destination -> cities lookup (for "Travelling To") =====
-   Keyed by the package's Destination Name (country OR a specific city like "Dubai"),
-   matched case-insensitively with accents ignored. If a package name isn't found here,
-   the "Travelling To" field just falls back to showing that name as-is (no airport code). */
-function normalizeDest(s){
-  return (s || '').toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
-}
-var DESTINATION_MAP = {
-"dubai":[{c:"DXB",t:"Dubai"}],
-"abu dhabi":[{c:"AUH",t:"Abu Dhabi"}],
-"uae":[{c:"DXB",t:"Dubai"},{c:"AUH",t:"Abu Dhabi"}],
-"mexico":[{c:"CUN",t:"Cancún"},{c:"PVR",t:"Puerto Vallarta"},{c:"SJD",t:"Los Cabos"},{c:"MEX",t:"Mexico City"},{c:"GDL",t:"Guadalajara"}],
-"cancun":[{c:"CUN",t:"Cancún"}],
-"cancún":[{c:"CUN",t:"Cancún"}],
-"india":[{c:"DEL",t:"New Delhi"},{c:"BOM",t:"Mumbai"},{c:"GOI",t:"Goa"},{c:"BLR",t:"Bangalore"},{c:"MAA",t:"Chennai"}],
-"las vegas":[{c:"LAS",t:"Las Vegas"}],
-"bali":[{c:"DPS",t:"Bali (Denpasar)"}],
-"indonesia":[{c:"DPS",t:"Bali (Denpasar)"},{c:"CGK",t:"Jakarta"}],
-"thailand":[{c:"BKK",t:"Bangkok"},{c:"HKT",t:"Phuket"},{c:"CNX",t:"Chiang Mai"}],
-"turkey":[{c:"IST",t:"Istanbul"},{c:"AYT",t:"Antalya"}],
-"egypt":[{c:"CAI",t:"Cairo"},{c:"HRG",t:"Hurghada"},{c:"SSH",t:"Sharm El Sheikh"}],
-"italy":[{c:"FCO",t:"Rome"},{c:"MXP",t:"Milan"},{c:"VCE",t:"Venice"}],
-"greece":[{c:"ATH",t:"Athens"},{c:"JTR",t:"Santorini"},{c:"JMK",t:"Mykonos"}],
-"spain":[{c:"MAD",t:"Madrid"},{c:"BCN",t:"Barcelona"},{c:"PMI",t:"Palma de Mallorca"}],
-"france":[{c:"CDG",t:"Paris"},{c:"NCE",t:"Nice"}],
-"portugal":[{c:"LIS",t:"Lisbon"}],
-"japan":[{c:"NRT",t:"Tokyo"},{c:"KIX",t:"Osaka"}],
-"usa":[{c:"JFK",t:"New York"},{c:"LAX",t:"Los Angeles"},{c:"MIA",t:"Miami"},{c:"LAS",t:"Las Vegas"},{c:"MCO",t:"Orlando"}],
-"united states":[{c:"JFK",t:"New York"},{c:"LAX",t:"Los Angeles"},{c:"MIA",t:"Miami"},{c:"LAS",t:"Las Vegas"},{c:"MCO",t:"Orlando"}],
-"uk":[{c:"LHR",t:"London"},{c:"MAN",t:"Manchester"},{c:"EDI",t:"Edinburgh"}],
-"united kingdom":[{c:"LHR",t:"London"},{c:"MAN",t:"Manchester"},{c:"EDI",t:"Edinburgh"}],
-"jamaica":[{c:"MBJ",t:"Montego Bay"},{c:"KIN",t:"Kingston"}],
-"dominican republic":[{c:"PUJ",t:"Punta Cana"},{c:"SDQ",t:"Santo Domingo"}],
-"maldives":[{c:"MLE",t:"Malé"}],
-"vietnam":[{c:"SGN",t:"Ho Chi Minh City"},{c:"HAN",t:"Hanoi"}],
-"singapore":[{c:"SIN",t:"Singapore"}],
-"south africa":[{c:"JNB",t:"Johannesburg"},{c:"CPT",t:"Cape Town"}],
-"morocco":[{c:"CMN",t:"Casablanca"},{c:"RAK",t:"Marrakech"}],
-"brazil":[{c:"GRU",t:"São Paulo"},{c:"GIG",t:"Rio de Janeiro"}],
-"peru":[{c:"LIM",t:"Lima"},{c:"CUZ",t:"Cusco"}],
-"australia":[{c:"SYD",t:"Sydney"},{c:"MEL",t:"Melbourne"},{c:"BNE",t:"Brisbane"},{c:"PER",t:"Perth"}],
-"new zealand":[{c:"AKL",t:"Auckland"}],
-"china":[{c:"PEK",t:"Beijing"},{c:"PVG",t:"Shanghai"}],
-"south korea":[{c:"ICN",t:"Seoul"}],
-"philippines":[{c:"MNL",t:"Manila"},{c:"CEB",t:"Cebu"}],
-"sri lanka":[{c:"CMB",t:"Colombo"}],
-"kenya":[{c:"NBO",t:"Nairobi"}],
-"cuba":[{c:"HAV",t:"Havana"}],
-"costa rica":[{c:"SJO",t:"San José"}],
-"fiji":[{c:"NAN",t:"Nadi"}],
-"iceland":[{c:"KEF",t:"Reykjavik"}],
-"germany":[{c:"FRA",t:"Frankfurt"},{c:"MUC",t:"Munich"},{c:"BER",t:"Berlin"}],
-"netherlands":[{c:"AMS",t:"Amsterdam"}],
-"switzerland":[{c:"ZRH",t:"Zurich"}],
-"austria":[{c:"VIE",t:"Vienna"}],
-"qatar":[{c:"DOH",t:"Doha"}]
-};
-function getDestOptions(name){
-  return DESTINATION_MAP[normalizeDest(name)] || null;
-}
 
 /* ===== phone country code selects (alphabetical, Canada default) ===== */
 var COUNTRY_CODES = [
@@ -1648,7 +1508,15 @@ function attachAirportAutocomplete(inputEl){
   window.addEventListener('resize', function(){ if(box.classList.contains('show')) positionBox(); });
   document.addEventListener('click', function(e){ if(e.target !== inputEl && !box.contains(e.target)){ box.innerHTML=''; box.classList.remove('show'); } });
 }
-['qFrom','qTo'].forEach(function(id){ attachAirportAutocomplete(document.getElementById(id)); });
+['qFrom','qTo','ppInputFrom','ppInputTo'].forEach(function(id){ attachAirportAutocomplete(document.getElementById(id)); });
+document.getElementById('ppInputTo').addEventListener('focus', function(){
+  var idx = this.value.indexOf(' — not sure which city yet');
+  if(idx !== -1){
+    this.value = this.value.slice(0, idx);
+    this.dispatchEvent(new Event('input', {bubbles:true}));
+    this.select();
+  }
+});
 
 /* ===================== SHARED EMAIL SEND ===================== */
 function submitInquiry(params, ui){
@@ -1901,18 +1769,7 @@ function showPackagePage(id){
   document.getElementById('ppFormView').style.display = 'block';
   document.getElementById('ppSuccessPanel').classList.remove('show');
   document.getElementById('ppForm').reset();
-  var ppToInput = document.getElementById('ppInputTo');
-  var ppToList = document.getElementById('ppToAirportList');
-  var destOpts = getDestOptions(p.name);
-  if(destOpts && destOpts.length){
-    ppToInput.value = p.name + ' — not sure which city yet';
-    ppToList.innerHTML = destOpts.map(function(o){
-      return '<option value="' + escapeHtml(o.t) + ' (' + o.c + ')">';
-    }).join('');
-  } else {
-    ppToInput.value = p.name;
-    ppToList.innerHTML = '';
-  }
+  document.getElementById('ppInputTo').value = p.name + ' — not sure which city yet';
   ppReturn.disabled = false;
   document.getElementById('ppChildAgesWrap').style.display = 'none';
   document.getElementById('ppChildAges').innerHTML = '';
